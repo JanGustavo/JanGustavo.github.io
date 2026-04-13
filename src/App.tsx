@@ -68,11 +68,11 @@ const PROJECTS: Project[] = [
  {
     id: 'radar',
     name: 'PromoPulse TELEGRAM',
-    tagline: 'Monitoramento de preços com alertas personalizados',
+    tagline: 'Ecossistema de monitoramento em tempo real que filtra e centraliza ofertas de múltiplos canais do Telegram. Automatiza a curadoria de promoções através de regras inteligentes e blacklist dinâmica.',
     description:
       'Bot de Telegram que monitora preços de produtos em lojas online e envia alertas quando há mudanças significativas.',
     highlight: 'Telegram API + Web Scraping + python + fastApi',
-    tech: ['Python', 'FastAPI', 'BeautifulSoup', 'Requests', 'telethon', 'Asyncio'],
+    tech: ['Python', 'FastAPI', 'BeautifulSoup', 'Requests', 'telethon', 'Asyncio', 'Chrome Extension'],
     tags: ['Bot', 'Telegram', 'Web Scraping'],
     github: 'https://github.com/JanGustavo/telegram-PromoPulse-extension',
     color: '#f5a623',
