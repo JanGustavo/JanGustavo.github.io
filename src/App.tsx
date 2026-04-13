@@ -14,23 +14,25 @@ interface Project {
   color: string
   accentVar: string
   status: 'live' | 'wip' | 'mvp'
+  hasCI: boolean
 }
 
 /* ─── dados ─── */
 const PROJECTS: Project[] = [
   {
-    id: 'moletom',
-    name: 'MoleTom',
-    tagline: 'E-commerce com IA generativa e PIX nativo',
+    id: 'stockwise',
+    name: 'StockWise.NET',
+    tagline: 'Sistema de controle de estoque com CI/CD',
     description:
-      'Loja de moletom print-on-demand onde cada estampa é gerada por IA. O usuário descreve a arte, a IA cria, o Pillow compõe sobre a foto real do produto e o pagamento é feito via PIX — do QR code ao webhook de confirmação com confetti.',
-    highlight: 'PIX real (BR Code/EMV + CRC-16) + Pollinations.ai + Pillow compositing',
-    tech: ['Python', 'Flask', 'SQLAlchemy', 'Pillow', 'PIX/EMV', 'Pollinations.ai'],
-    tags: ['E-commerce', 'IA Generativa', 'Pagamento'],
-    github: 'https://github.com/JanGustavo/MoleTom-store',
-    color: '#f5a623',
-    accentVar: 'amber',
-    status: 'mvp',
+      'Console app em .NET 10 com CRUD completo de produtos, gestão de pedidos (vendas e reposições), injeção de dependência, exceções customizadas e pipeline de CI automatizado via GitHub Actions.',
+    highlight: 'GitHub Actions CI + PostgreSQL + Repository Pattern + DI nativo',
+    tech: ['C#', '.NET 10', 'PostgreSQL', 'EF Core', 'GitHub Actions'],
+    tags: ['Backend', 'CI/CD', '.NET'],
+    github: 'https://github.com/JanGustavo/CRUD-Controle-de-estoque',
+    color: '#4afa8a',
+    accentVar: 'green',
+    status: 'live',
+    hasCI: true,
   },
   {
     id: 'adotapet',
@@ -45,21 +47,39 @@ const PROJECTS: Project[] = [
     color: '#4afa8a',
     accentVar: 'green',
     status: 'mvp',
+    hasCI: false,
   },
   {
-    id: 'stockwise',
-    name: 'StockWise.NET',
-    tagline: 'Sistema de controle de estoque com CI/CD',
+    id: 'moletom',
+    name: 'MoleTom',
+    tagline: 'E-commerce com IA generativa e PIX nativo',
     description:
-      'Console app em .NET 9 com CRUD completo de produtos, gestão de pedidos (vendas e reposições), injeção de dependência, exceções customizadas e pipeline de CI automatizado via GitHub Actions.',
-    highlight: 'GitHub Actions CI + PostgreSQL + Repository Pattern + DI nativo',
-    tech: ['C#', '.NET 9', 'PostgreSQL', 'EF Core', 'GitHub Actions'],
-    tags: ['Backend', 'CI/CD', '.NET'],
-    github: 'https://github.com/JanGustavo/CRUD-Controle-de-estoque',
-    color: '#4afa8a',
-    accentVar: 'green',
-    status: 'live',
+      'Loja de moletom print-on-demand onde cada estampa é gerada por IA. O usuário descreve a arte, a IA cria, o Pillow compõe sobre a foto real do produto e o pagamento é feito via PIX — do QR code ao webhook de confirmação com confetti.',
+    highlight: 'PIX real (BR Code/EMV + CRC-16) + Pollinations.ai + Pillow compositing',
+    tech: ['Python', 'Flask', 'SQLAlchemy', 'Pillow', 'PIX/EMV', 'Pollinations.ai'],
+    tags: ['E-commerce', 'IA Generativa', 'Pagamento'],
+    github: 'https://github.com/JanGustavo/MoleTom-store',
+    color: '#f5a623',
+    accentVar: 'amber',
+    status: 'mvp',
+    hasCI: false,
   },
+
+ {
+    id: 'radar',
+    name: 'PromoPulse TELEGRAM',
+    tagline: 'Monitoramento de preços com alertas personalizados',
+    description:
+      'Bot de Telegram que monitora preços de produtos em lojas online e envia alertas quando há mudanças significativas.',
+    highlight: 'Telegram API + Web Scraping + python + fastApi',
+    tech: ['Python', 'FastAPI', 'BeautifulSoup', 'Requests', 'telethon', 'Asyncio'],
+    tags: ['Bot', 'Telegram', 'Web Scraping'],
+    github: 'https://github.com/JanGustavo/telegram-PromoPulse-extension',
+    color: '#f5a623',
+    accentVar: 'amber',
+    status: 'wip',
+    hasCI: false,
+  }
 ]
 
 const SKILLS = {
@@ -164,6 +184,54 @@ function StatusBadge({ status }: { status: Project['status'] }) {
   )
 }
 
+function CIBadge({ active }: { active?: boolean }) {
+  if (!active) return null;
+  return (
+    <span style={{
+      fontSize: '10px',
+      color: '#4db8ff', // Um azul para diferenciar do verde/amber
+      border: '1px solid #4db8ff',
+      padding: '1px 6px',
+      borderRadius: '2px',
+      marginLeft: '8px',
+      textTransform: 'uppercase',
+    }}>
+      ⚙️ CI/CD Active
+    </span>
+  );
+}
+
+function RenderButton() {
+  return (
+    <a
+      href="https://moletom-store.onrender.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        fontSize: '12px',
+        color: 'purple',
+        border: '1px solid purple',
+        padding: '5px 16px',
+        letterSpacing: '0.08em',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '6px',
+        transition: 'background 0.2s, color 0.2s',
+      }}
+      onMouseEnter={e => {
+        (e.currentTarget as HTMLElement).style.background = 'purple'
+        ;(e.currentTarget as HTMLElement).style.color = '#0d0f0e'
+      }}
+      onMouseLeave={e => {
+        (e.currentTarget as HTMLElement).style.background = 'transparent'
+        ;(e.currentTarget as HTMLElement).style.color = 'purple'
+      }}
+    >
+      ↗ Render
+    </a>
+  );
+}
+
 function ProjectCard({ project, delay }: { project: Project; delay: number }) {
   const { ref, visible } = useVisible()
   const [hovered, setHovered] = useState(false)
@@ -214,7 +282,10 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
             {project.tagline}
           </p>
         </div>
-        <StatusBadge status={project.status} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <StatusBadge status={project.status} />
+          <CIBadge active={project.hasCI} />
+        </div>
       </div>
 
       {/* descrição */}
@@ -278,6 +349,7 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
         >
           ↗ GitHub
         </a>
+        {project.id === 'moletom' && <RenderButton />}
         {project.live && (
           <a
             href={project.live}
@@ -289,8 +361,15 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
           </a>
         )}
       </div>
+
     </div>
   )
+  
+
+  
+
+
+
 }
 
 function SkillsSection() {
@@ -499,9 +578,9 @@ export default function App() {
                 fontSize: '14px',
                 marginBottom: '2rem',
               }}>
-                Estudante de ADS na Uninassau (Fev/2025 → Dez/2026) construindo sistemas
-                reais — desde e-commerce com IA generativa e PIX nativo até APIs REST com
-                autenticação JWT. Baseado em Bayeux, PB.
+                Desenvolvedor Backend Júnior focado em ecossistemas .NET e Python. 
+        Especialista na construção de APIs robustas, sistemas de estoque com CI/CD 
+        e integrações com IA generativa. Baseado em Bayeux, PB.
               </p>
 
               <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
