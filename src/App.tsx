@@ -232,6 +232,73 @@ function RenderButton() {
   );
 }
 
+function deployButton(url: string) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        fontSize: '12px',
+        color: 'red',
+        border: '1px solid red',
+        padding: '5px 16px',
+        letterSpacing: '0.08em',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '6px',
+        transition: 'background 0.2s, color 0.2s',
+      }}
+
+      onMouseEnter={e => {
+        (e.currentTarget as HTMLElement).style.background = 'red'
+        ;(e.currentTarget as HTMLElement).style.color = '#0d0f0e'
+      }}
+      onMouseLeave={e => {
+        (e.currentTarget as HTMLElement).style.background = 'transparent'
+        ;(e.currentTarget as HTMLElement).style.color = 'red'
+      }}
+    >
+      Deploy →
+    </a>
+  );
+}
+
+function downloadRelease(url: string) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        fontSize: '12px',
+        color: 'blue',
+        border: '1px solid blue',
+        padding: '5px 16px',
+        letterSpacing: '0.08em',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '6px',
+        transition: 'background 0.2s, color 0.2s',
+      }}
+
+      onMouseEnter={e => {
+        (e.currentTarget as HTMLElement).style.background = 'blue'
+        ;(e.currentTarget as HTMLElement).style.color = '#ffffff'
+      }}
+      onMouseLeave={e => {
+        (e.currentTarget as HTMLElement).style.background = 'transparent'
+        ;(e.currentTarget as HTMLElement).style.color = 'blue'
+      }}
+    >
+      Baixar Release ↓
+    </a>
+  );
+}
+
+
+
+
 function ProjectCard({ project, delay }: { project: Project; delay: number }) {
   const { ref, visible } = useVisible()
   const [hovered, setHovered] = useState(false)
@@ -350,6 +417,8 @@ function ProjectCard({ project, delay }: { project: Project; delay: number }) {
           ↗ GitHub
         </a>
         {project.id === 'moletom' && <RenderButton />}
+        {project.id === 'radar' && deployButton('https://jangustavo.me/apis/promopulse/docs')}
+        {project.id === 'radar' && downloadRelease('https://github.com/JanGustavo/telegram-PromoPulse-extension/releases/latest/download/PromoPulse-Extension.zip')}
         {project.live && (
           <a
             href={project.live}
